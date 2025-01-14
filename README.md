@@ -1,164 +1,30 @@
-# Boilerplate React App
+# Wordle Game
 
-Here's how I like to spin up a TypeScript React app with the following tech:
+This is a simple Wordle game built with React. The objective of the game is to guess a 5-letter target word within 6 attempts. The app provides feedback on each guess by changing the color of the tiles to indicate how close the guess was to the target word.
 
-- Vite: build
-- Vitest: testing framework
-- ESLint: linter
-- Prettier: code formatter
+## How to Play
 
-## Create a New React Project with Vite
+1. Guess the Wordle in 6 tries.
+2. Each guess must be a valid 5-letter word.
+3. Press the Enter key to submit your guess.
+4. The color of the tiles will change to show how close your guess was to the target word:
+   - Green: The letter is in the word and in the correct spot.
+   - Yellow: The letter is in the word but in the wrong spot.
+   - Gray: The letter is not in the word in any spot.
+5. If you guess the correct word, a message "YOU WIN!" will be displayed.
+6. If you use all 6 attempts without guessing the correct word, a message "Better luck next time!" will be displayed.
+7. After the game ends, a reset button will appear to allow you to start a new game.
 
-Execute the following command to create a new React project with Vite:
+## Features
 
-```sh
-npm create vite@latest
-```
+- 6x5 grid for six guesses.
+- Keyboard input handling.
+- Reset button to start a new game.
 
-1. On the `Project name` step, enter the project name of your choice (e.g, `vite-project`)
-2. On the `Select a framework` step, choose `React`
-3. On the `Select a variant` step, choose `TypeScript + SWC`
-4. Finally, run the commands they prompt to install dependencies, and start the dev server to check that everything works.
-   ```sh
-     cd vite-project
-     npm install
-     npm run dev
-   ```
+## How to Run
 
-## Update the File Structure
-
-Update the file structure to match the [bulletproof-react recommendation](https://github.com/alan2207/bulletproof-react/blob/master/docs/project-structure.md).
-
-## Install Prettier
-
-Install Prettier to format your code:
+Clone the repo, then run:
 
 ```sh
-npm i -D prettier
-```
-
-Create `.prettierrc` with the following content:
-
-```json
-{
-  "semi": true,
-  "singleQuote": true,
-  "trailingComma": "es5",
-  "printWidth": 100,
-  "endOfLine": "lf"
-}
-```
-
-## Configure ESLint and Prettier
-
-Install the ESLint Prettier plugin to prevent conflicts in rules between ESLint and Prettier:
-
-```sh
-npm i -D eslint-config-prettier
-```
-
-Add the following script to `package.json`:
-
-```json
-"format": "prettier --write ./src"
-```
-
-Install React-specific linting rules for ESLint:
-
-```sh
-npm i -D eslint-plugin-react
-```
-
-Update `eslint.config.js` to match the following:
-
-```js
-export default tseslint.config(
-  { ignores: ['dist'] },
-  {
-    extends: [
-      'eslint:recommended',
-      'plugin:react/recommended',
-      'plugin:react/jsx-runtime',
-      'plugin:@typescript-eslint/recommended-type-checked',
-      'plugin:@typescript-eslint/stylistic-type-checked',
-      'plugin:react-hooks/recommended',
-      // This disables the formatting rules in ESLint that Prettier is going to be responsible for handling.
-      // Make sure it's always the last config, so it gets the chance to override other configs.
-      'prettier',
-    ],
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    },
-    parser: '@typescript-eslint/parser',
-    ignorePatterns: ['dist'],
-  }
-);
-```
-
-## Configure VS Code
-
-Install the Prettier and ESLint plugins for VS Code.
-
-Create `.vscode/settings.json` with the following content:
-
-```json
-{
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnPaste": true,
-  "editor.formatOnType": false,
-  "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file",
-  "files.autoSave": "onFocusChange"
-}
-```
-
-### Set Up Unit Testing
-
-Install the necessary dependencies for unit testing:
-
-```sh
-npm i -D vitest jsdom @testing-library/jest-dom @testing-library/react
-```
-
-Create `src/tests/setupTests.ts` and insert the following code:
-
-```ts
-import '@testing-library/jest-dom';
-```
-
-Create a `vitest.config.ts` that merges the existing Vite config, so it isn't overridden.
-
-> Note: This isn't recommended by Vitest, but I was getting a TS error when I tried to add the test config to `vite.config.ts`, and this was simpler.
-
-```ts
-import { defineConfig, mergeConfig } from 'vitest/config';
-import viteConfig from './vite.config';
-
-export default mergeConfig(
-  viteConfig,
-  defineConfig({
-    test: {
-      globals: true,
-      environment: 'jsdom',
-      setupFiles: ['./src/tests/setupTests.ts'],
-    },
-  })
-);
-```
-
-Add the following scripts in `package.json`:
-
-```json
-"test": "vitest",
-"coverage": "vitest run --coverage"
+npm i && npm run build && npm run dev
 ```
